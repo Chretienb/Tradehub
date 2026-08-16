@@ -9,7 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LanguageSwitcher } from "@/components/language-switcher";
 import type { UserSession } from "@/lib/auth";
 import { useLanguage } from "@/lib/i18n/context";
 import { createClient } from "@/lib/supabase/client";
@@ -67,12 +66,6 @@ export function MobileMenu({ session }: { session: UserSession | null }) {
               </DropdownMenuItem>
             </>
           )}
-
-          <DropdownMenuSeparator />
-
-          <div className="px-1 py-1">
-            <LanguageSwitcher className="w-full" />
-          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

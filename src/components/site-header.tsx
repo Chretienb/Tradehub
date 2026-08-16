@@ -19,13 +19,15 @@ export async function SiteHeader({ bordered = true }: { bordered?: boolean }) {
         )}
       >
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-4 sm:gap-4 sm:px-6">
-          <Logo iconSize={32} />
+          <Logo />
           <SiteNavLinks />
-          <div className="hidden items-center gap-2 md:flex">
+          <div className="flex items-center gap-2">
             <LanguageSwitcher />
-            <HeaderAuthActions session={session} />
+            <div className="hidden items-center gap-2 md:flex">
+              <HeaderAuthActions session={session} />
+            </div>
+            <MobileMenu session={session} />
           </div>
-          <MobileMenu session={session} />
         </div>
       </header>
 
