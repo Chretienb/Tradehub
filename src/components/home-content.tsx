@@ -69,7 +69,7 @@ export function HomeContent({
           style={{ background: "#0b6b3a1f" }}
         />
 
-        <div className="relative mx-auto max-w-6xl px-0 sm:px-6">
+        <div className="relative mx-auto max-w-6xl px-1 sm:px-6">
           <div className="grid gap-4 lg:grid-cols-2">
             {/* Big video card */}
             <div className="relative flex min-h-[560px] flex-col overflow-hidden rounded-3xl lg:min-h-[600px]">
