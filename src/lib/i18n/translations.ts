@@ -77,6 +77,15 @@ const fr = {
   "vendorCta.button": "Devenir fournisseur",
 
   "language.label": "Langue",
+
+  "vendorNav.menu": "Menu",
+  "vendorNav.requests": "Demandes de devis",
+  "vendorNav.payments": "Paiements",
+  "vendorNav.settings": "Paramètres",
+  "vendorNav.company": "Votre entreprise",
+  "vendorNav.account": "Compte fournisseur",
+  "vendorNav.collapseSidebar": "Réduire la barre latérale",
+  "vendorNav.expandSidebar": "Ouvrir la barre latérale",
 } as const;
 
 export type TranslationKey = keyof typeof fr;
@@ -145,6 +154,15 @@ const en: Record<TranslationKey, string> = {
   "vendorCta.button": "Become a vendor",
 
   "language.label": "Language",
+
+  "vendorNav.menu": "Menu",
+  "vendorNav.requests": "Quote requests",
+  "vendorNav.payments": "Payments",
+  "vendorNav.settings": "Settings",
+  "vendorNav.company": "Your business",
+  "vendorNav.account": "Vendor account",
+  "vendorNav.collapseSidebar": "Collapse sidebar",
+  "vendorNav.expandSidebar": "Expand sidebar",
 };
 
 const ln: Record<TranslationKey, string> = {
@@ -211,6 +229,15 @@ const ln: Record<TranslationKey, string> = {
   "vendorCta.button": "Kokóma moteki",
 
   "language.label": "Monɔkɔ",
+
+  "vendorNav.menu": "Menu",
+  "vendorNav.requests": "Bosenga ya ntalo",
+  "vendorNav.payments": "Bofuti",
+  "vendorNav.settings": "Bobongisi",
+  "vendorNav.company": "Kompanyi na yo",
+  "vendorNav.account": "Kɔnti ya moteki",
+  "vendorNav.collapseSidebar": "Kanga bar ya pembeni",
+  "vendorNav.expandSidebar": "Fungola bar ya pembeni",
 };
 
 const sw: Record<TranslationKey, string> = {
@@ -277,6 +304,15 @@ const sw: Record<TranslationKey, string> = {
   "vendorCta.button": "Kuwa muuzaji",
 
   "language.label": "Lugha",
+
+  "vendorNav.menu": "Menyu",
+  "vendorNav.requests": "Maombi ya bei",
+  "vendorNav.payments": "Malipo",
+  "vendorNav.settings": "Mipangilio",
+  "vendorNav.company": "Biashara yako",
+  "vendorNav.account": "Akaunti ya muuzaji",
+  "vendorNav.collapseSidebar": "Kunja upau wa pembeni",
+  "vendorNav.expandSidebar": "Panua upau wa pembeni",
 };
 
 const kg: Record<TranslationKey, string> = {
@@ -343,6 +379,15 @@ const kg: Record<TranslationKey, string> = {
   "vendorCta.button": "Kuma ntekisi",
 
   "language.label": "Ndinga",
+
+  "vendorNav.menu": "Menu",
+  "vendorNav.requests": "Malombi ma ntalu",
+  "vendorNav.payments": "Mfutu",
+  "vendorNav.settings": "Bulongi",
+  "vendorNav.company": "Kisalu kiaku",
+  "vendorNav.account": "Konti ya ntekisi",
+  "vendorNav.collapseSidebar": "Kanga barre ya lubakala",
+  "vendorNav.expandSidebar": "Fungula barre ya lubakala",
 };
 
 export const translations: Record<Locale, Record<TranslationKey, string>> = {

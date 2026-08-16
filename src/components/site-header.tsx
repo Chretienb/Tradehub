@@ -21,7 +21,7 @@ export async function SiteHeader({ bordered = true }: { bordered?: boolean }) {
           <Logo />
           <SiteNavLinks />
           <div className="flex items-center gap-2">
-            <LanguageSwitcher className="hidden sm:flex" />
+            <LanguageSwitcher />
             <HeaderAuthActions session={session} />
           </div>
         </div>

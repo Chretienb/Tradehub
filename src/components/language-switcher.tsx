@@ -22,7 +22,10 @@ export function LanguageSwitcher({ className }: { className?: string }) {
         aria-label={t("language.label")}
       >
         <Languages className="size-3.5" />
-        <SelectValue>{localeLabels[locale]}</SelectValue>
+        <SelectValue>
+          <span className="hidden sm:inline">{localeLabels[locale]}</span>
+          <span className="sm:hidden">{locale.toUpperCase()}</span>
+        </SelectValue>
       </SelectTrigger>
       <SelectContent>
         {locales.map((l) => (

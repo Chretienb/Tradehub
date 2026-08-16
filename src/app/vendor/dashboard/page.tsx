@@ -121,7 +121,7 @@ export default async function VendorDashboardPage() {
 
   return (
     <div className="mx-auto max-w-6xl">
-      <div className="relative mb-6 flex min-h-[280px] flex-col justify-end overflow-hidden rounded-3xl p-6 sm:min-h-[320px] sm:p-8">
+      <div className="relative mb-4 flex min-h-[200px] flex-col justify-end overflow-hidden rounded-2xl p-4 sm:mb-6 sm:min-h-[320px] sm:rounded-3xl sm:p-8">
         <video
           autoPlay
           loop
@@ -148,11 +148,11 @@ export default async function VendorDashboardPage() {
               <VerificationIcon className="size-3.5" />
               {verification.label}
             </Link>
-            <p className="mt-3 text-sm font-medium text-white/80">Espace fournisseur</p>
-            <h1 className="mt-2 font-heading text-3xl font-medium tracking-tight text-white sm:text-4xl">
+            <p className="mt-2 text-sm font-medium text-white/80 sm:mt-3">Espace fournisseur</p>
+            <h1 className="mt-1.5 font-heading text-2xl font-medium tracking-tight text-white sm:mt-2 sm:text-4xl">
               Tableau de bord
             </h1>
-            <p className="mt-2 max-w-md text-white/70">
+            <p className="mt-2 hidden max-w-md text-white/70 sm:block">
               Suivez vos ventes, vos demandes de devis et vos paiements en un coup d&apos;œil.
             </p>
           </div>
@@ -160,18 +160,18 @@ export default async function VendorDashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <Card key={stat.label} className="gap-2 py-5">
+            <Card key={stat.label} className="gap-2 py-4 sm:py-5">
               <CardContent className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
-                  <p className="mt-1 font-heading text-2xl font-medium">{stat.value}</p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{stat.change}</p>
+                <div className="min-w-0">
+                  <p className="truncate text-xs text-muted-foreground sm:text-sm">{stat.label}</p>
+                  <p className="mt-1 font-heading text-xl font-medium sm:text-2xl">{stat.value}</p>
+                  <p className="mt-0.5 hidden text-xs text-muted-foreground sm:block">{stat.change}</p>
                 </div>
-                <span className="flex size-9 flex-shrink-0 items-center justify-center rounded-full bg-secondary">
+                <span className="flex size-8 flex-shrink-0 items-center justify-center rounded-full bg-secondary sm:size-9">
                   <Icon className="size-4" />
                 </span>
               </CardContent>
