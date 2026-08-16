@@ -12,7 +12,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogoReveal } from "@/components/logo-reveal";
 import type { UserRole } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/client";
-import { ArrowLeft, BadgeCheck, Headset, Lock } from "lucide-react";
+import { BadgeCheck, Headset, Lock } from "lucide-react";
 
 const trustPoints = [
   { icon: BadgeCheck, text: "Fournisseurs vérifiés avant publication" },
@@ -34,54 +34,12 @@ function LoginForm() {
   const [role, setRole] = useState<UserRole>(
     searchParams.get("role") === "vendor" ? "vendor" : "customer"
   );
-  const [phone, setPhone] = useState("");
-  const [code, setCode] = useState("");
-  const [step, setStep] = useState<"phone" | "code">("phone");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [revealing, setRevealing] = useState(false);
 
-  async function handleSendCode(e: React.FormEvent) {
-    e.preventDefault();
-    if (!phone.trim()) {
-      toast.error("Entrez votre numéro de téléphone.");
-      return;
-    }
-    setSubmitting(true);
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithOtp({ phone: phone.trim() });
-    setSubmitting(false);
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-    setStep("code");
-    toast.success(`Code envoyé au ${phone}.`);
-  }
-
-  async function handleVerifyCode(e: React.FormEvent) {
-    e.preventDefault();
-    if (code.trim().length !== 6) {
-      toast.error("Entrez le code à 6 chiffres reçu par SMS.");
-      return;
-    }
-    setSubmitting(true);
-    const supabase = createClient();
-    const { error } = await supabase.auth.verifyOtp({
-      phone: phone.trim(),
-      token: code.trim(),
-      type: "sms",
-    });
-    setSubmitting(false);
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-    setRevealing(true);
-  }
-
-  async function handleVendorLogin(e: React.FormEvent) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     if (!email.trim() || !password) {
       toast.error("Entrez votre email et votre mot de passe.");
@@ -194,140 +152,64 @@ function LoginForm() {
 
         <div className="flex flex-1 items-center py-10">
           <div className="mx-auto flex w-full max-w-sm flex-col gap-6">
-            {role === "customer" && step === "code" ? (
-              <button
-                type="button"
-                onClick={() => setStep("phone")}
-                className="-mb-2 flex w-fit items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
-              >
-                <ArrowLeft className="size-4" />
-                Modifier le numéro
-              </button>
-            ) : (
-              <div>
-                <h1 className="text-2xl font-semibold tracking-tight">Se connecter</h1>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  {role === "vendor"
-                    ? "Connectez-vous à votre compte fournisseur TEKA."
-                    : "Connectez-vous à votre compte TEKA avec votre numéro de téléphone."}
-                </p>
+            <div>
+              <h1 className="text-2xl font-semibold tracking-tight">Se connecter</h1>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {role === "vendor"
+                  ? "Connectez-vous à votre compte fournisseur TEKA."
+                  : "Connectez-vous à votre compte TEKA avec votre email."}
+              </p>
+            </div>
+
+            <Tabs value={role} onValueChange={(value) => setRole((value as UserRole) ?? "customer")}>
+              <TabsList className="w-full">
+                <TabsTrigger value="customer">Client</TabsTrigger>
+                <TabsTrigger value="vendor">Fournisseur</TabsTrigger>
+              </TabsList>
+            </Tabs>
+
+            <form onSubmit={handleLogin} className="flex flex-col gap-6">
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder={role === "vendor" ? "vous@entreprise.com" : "vous@example.com"}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="password">Mot de passe</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
               </div>
-            )}
 
-            {!(role === "customer" && step === "code") && (
-              <Tabs
-                value={role}
-                onValueChange={(value) => {
-                  setRole((value as UserRole) ?? "customer");
-                  setStep("phone");
-                }}
-              >
-                <TabsList className="w-full">
-                  <TabsTrigger value="customer">Client</TabsTrigger>
-                  <TabsTrigger value="vendor">Fournisseur</TabsTrigger>
-                </TabsList>
-              </Tabs>
-            )}
+              <Button type="submit" className="w-full" size="lg" disabled={submitting}>
+                {submitting ? "Connexion…" : "Se connecter"}
+              </Button>
 
-            {role === "vendor" ? (
-              <form onSubmit={handleVendorLogin} className="flex flex-col gap-6">
-                <div className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="vous@entreprise.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="password">Mot de passe</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <Button type="submit" className="w-full" size="lg" disabled={submitting}>
-                  {submitting ? "Connexion…" : "Se connecter"}
-                </Button>
-
-                <p className="text-center text-sm text-muted-foreground">
-                  Vous n&apos;avez pas de compte ?{" "}
-                  <Link href="/signup?role=vendor" className="font-medium text-foreground hover:underline">
-                    En créer un
-                  </Link>
-                </p>
-              </form>
-            ) : step === "phone" ? (
-              <form onSubmit={handleSendCode} className="flex flex-col gap-6">
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="phone">Numéro de téléphone</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    placeholder="+1 234 567 8900"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
-
-                <Button type="submit" className="w-full" size="lg" disabled={submitting}>
-                  {submitting ? "Envoi du code…" : "Recevoir le code par SMS"}
-                </Button>
-
-                <p className="text-center text-sm text-muted-foreground">
-                  Vous n&apos;avez pas de compte ?{" "}
-                  <Link href="/signup" className="font-medium text-foreground hover:underline">
-                    En créer un
-                  </Link>
-                </p>
-              </form>
-            ) : (
-              <form onSubmit={handleVerifyCode} className="flex flex-col gap-6">
-                <p className="-mt-4 text-sm text-muted-foreground">
-                  Code à 6 chiffres envoyé par SMS au {phone}.
-                </p>
-
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="code">Code de vérification</Label>
-                  <Input
-                    id="code"
-                    inputMode="numeric"
-                    maxLength={6}
-                    placeholder="123456"
-                    className="text-center text-lg tracking-[0.5em]"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                  />
-                </div>
-
-                <Button type="submit" className="w-full" size="lg" disabled={submitting}>
-                  {submitting ? "Vérification…" : "Vérifier et se connecter"}
-                </Button>
-
-                <p className="text-center text-sm text-muted-foreground">
-                  Vous n&apos;avez rien reçu ?{" "}
-                  <button
-                    type="button"
-                    onClick={(e) => handleSendCode(e as unknown as React.FormEvent)}
-                    className="font-medium text-foreground hover:underline"
-                  >
-                    Renvoyer le code
-                  </button>
-                </p>
-                <p className="text-center text-xs text-muted-foreground">
-                  <Link href="/recover-account" className="hover:underline">
-                    Numéro perdu ou inaccessible ?
-                  </Link>
-                </p>
-              </form>
-            )}
+              <p className="text-center text-sm text-muted-foreground">
+                Vous n&apos;avez pas de compte ?{" "}
+                <Link
+                  href={role === "vendor" ? "/signup?role=vendor" : "/signup"}
+                  className="font-medium text-foreground hover:underline"
+                >
+                  En créer un
+                </Link>
+              </p>
+              <p className="text-center text-xs text-muted-foreground">
+                <Link href="/recover-account" className="hover:underline">
+                  Mot de passe oublié ?
+                </Link>
+              </p>
+            </form>
           </div>
         </div>
       </div>

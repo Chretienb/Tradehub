@@ -16,16 +16,16 @@ type Role = "customer" | "vendor";
 export default function RecoverAccountPage() {
   const [role, setRole] = useState<Role>("customer");
   const [name, setName] = useState("");
-  const [oldPhone, setOldPhone] = useState("");
-  const [newPhone, setNewPhone] = useState("");
+  const [oldEmail, setOldEmail] = useState("");
+  const [newEmail, setNewEmail] = useState("");
   const [details, setDetails] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim() || !newPhone.trim()) {
-      toast.error("Indiquez votre nom et un numéro où vous joindre.");
+    if (!name.trim() || !newEmail.trim()) {
+      toast.error("Indiquez votre nom et un email où vous joindre.");
       return;
     }
     setSubmitting(true);
@@ -47,8 +47,8 @@ export default function RecoverAccountPage() {
         <div className="max-w-sm">
           <h1 className="text-2xl font-semibold tracking-tight">Demande envoyée</h1>
           <p className="mt-2 text-muted-foreground">
-            Notre équipe va vérifier votre identité et vous recontacter au{" "}
-            <span className="font-medium text-foreground">{newPhone}</span> sous 24 à 48h pour
+            Notre équipe va vérifier votre identité et vous recontacter à{" "}
+            <span className="font-medium text-foreground">{newEmail}</span> sous 24 à 48h pour
             réactiver votre compte.
           </p>
         </div>
@@ -73,9 +73,9 @@ export default function RecoverAccountPage() {
         </div>
 
         <div className="mt-6">
-          <h1 className="text-2xl font-semibold tracking-tight">Numéro perdu ou inaccessible ?</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Email perdu ou inaccessible ?</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Comme votre numéro sert à vous connecter, nous ne pouvons pas le réinitialiser
+            Comme votre email sert à vous connecter, nous ne pouvons pas le réinitialiser
             automatiquement. Décrivez votre situation et notre équipe vérifiera votre identité
             avant de réactiver l&apos;accès.
           </p>
@@ -100,24 +100,24 @@ export default function RecoverAccountPage() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="old-phone">Ancien numéro (si vous vous en souvenez)</Label>
+            <Label htmlFor="old-email">Ancien email (si vous vous en souvenez)</Label>
             <Input
-              id="old-phone"
-              type="tel"
-              placeholder="+1 234 567 8900"
-              value={oldPhone}
-              onChange={(e) => setOldPhone(e.target.value)}
+              id="old-email"
+              type="email"
+              placeholder="vous@example.com"
+              value={oldEmail}
+              onChange={(e) => setOldEmail(e.target.value)}
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="new-phone">Numéro où vous joindre maintenant</Label>
+            <Label htmlFor="new-email">Email où vous joindre maintenant</Label>
             <Input
-              id="new-phone"
-              type="tel"
-              placeholder="+1 234 567 8900"
-              value={newPhone}
-              onChange={(e) => setNewPhone(e.target.value)}
+              id="new-email"
+              type="email"
+              placeholder="vous@example.com"
+              value={newEmail}
+              onChange={(e) => setNewEmail(e.target.value)}
             />
           </div>
 
@@ -125,7 +125,7 @@ export default function RecoverAccountPage() {
             <Label htmlFor="details">Détails (optionnel)</Label>
             <Textarea
               id="details"
-              placeholder="Ex : téléphone volé, carte SIM perdue…"
+              placeholder="Ex : boîte email piratée, ancien email supprimé…"
               value={details}
               onChange={(e) => setDetails(e.target.value)}
             />
