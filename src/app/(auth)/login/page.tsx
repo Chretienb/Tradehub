@@ -12,7 +12,17 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogoReveal } from "@/components/logo-reveal";
 import type { UserRole } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/client";
-import { ArrowLeft, BadgeCheck, Headset, Lock } from "lucide-react";
+import {
+  ArrowLeft,
+  BadgeCheck,
+  Eye,
+  EyeOff,
+  Headset,
+  Lock,
+  Mail,
+  Store,
+  User,
+} from "lucide-react";
 
 const trustPoints = [
   { icon: BadgeCheck, text: "Fournisseurs vérifiés avant publication" },
@@ -36,6 +46,7 @@ function LoginForm() {
   );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [revealing, setRevealing] = useState(false);
 
@@ -145,79 +156,100 @@ function LoginForm() {
           Retour à l&apos;accueil
         </Link>
 
-        <div className="mt-4 flex items-center justify-between lg:justify-end">
-          <Link href="/" className="flex items-center gap-2 lg:hidden">
-            <Image src="/brand/logo-icon.png" alt="TEKA" width={30} height={30} className="object-contain" />
-            <span className="font-heading text-lg font-semibold text-foreground">TEKA</span>
-          </Link>
-          <p className="text-sm text-muted-foreground">
-            Pas de compte ?{" "}
-            <Link href="/signup" className="font-medium text-foreground hover:underline">
-              En créer un
-            </Link>
-          </p>
-        </div>
-
-        <div className="flex flex-1 items-center py-10">
-          <div className="mx-auto flex w-full max-w-sm flex-col gap-6">
-            <div>
-              <h1 className="text-2xl font-semibold tracking-tight">Se connecter</h1>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {role === "vendor"
-                  ? "Connectez-vous à votre compte fournisseur TEKA."
-                  : "Connectez-vous à votre compte TEKA avec votre email."}
-              </p>
+        <div className="flex flex-1 flex-col items-center justify-center py-10">
+          <div className="mx-auto flex w-full max-w-sm flex-col gap-7">
+            <div className="flex flex-col items-center gap-4 text-center">
+              <Link href="/" className="lg:hidden">
+                <Image
+                  src="/brand/logo-icon.png"
+                  alt="TEKA"
+                  width={40}
+                  height={40}
+                  className="object-contain"
+                />
+              </Link>
+              <div>
+                <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Bon retour</h1>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {role === "vendor"
+                    ? "Connectez-vous à votre compte fournisseur TEKA."
+                    : "Connectez-vous à votre compte TEKA avec votre email."}
+                </p>
+              </div>
             </div>
 
             <Tabs value={role} onValueChange={(value) => setRole((value as UserRole) ?? "customer")}>
               <TabsList className="w-full">
-                <TabsTrigger value="customer">Client</TabsTrigger>
-                <TabsTrigger value="vendor">Fournisseur</TabsTrigger>
+                <TabsTrigger value="customer" className="gap-1.5">
+                  <User className="size-3.5" /> Client
+                </TabsTrigger>
+                <TabsTrigger value="vendor" className="gap-1.5">
+                  <Store className="size-3.5" /> Fournisseur
+                </TabsTrigger>
               </TabsList>
             </Tabs>
 
-            <form onSubmit={handleLogin} className="flex flex-col gap-6">
+            <form onSubmit={handleLogin} className="flex flex-col gap-5">
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder={role === "vendor" ? "vous@entreprise.com" : "vous@example.com"}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                  <div className="relative">
+                    <Mail className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder={role === "vendor" ? "vous@entreprise.com" : "vous@example.com"}
+                      className="h-11 pl-9"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="password">Mot de passe</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="password">Mot de passe</Label>
+                    <Link
+                      href="/recover-account"
+                      className="text-xs text-muted-foreground hover:text-foreground hover:underline"
+                    >
+                      Oublié ?
+                    </Link>
+                  </div>
+                  <div className="relative">
+                    <Lock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      className="h-11 pl-9 pr-9"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((v) => !v)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                    >
+                      {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <Button type="submit" className="w-full" size="lg" disabled={submitting}>
+              <Button type="submit" className="h-11 w-full rounded-full" size="lg" disabled={submitting}>
                 {submitting ? "Connexion…" : "Se connecter"}
               </Button>
-
-              <p className="text-center text-sm text-muted-foreground">
-                Vous n&apos;avez pas de compte ?{" "}
-                <Link
-                  href={role === "vendor" ? "/signup?role=vendor" : "/signup"}
-                  className="font-medium text-foreground hover:underline"
-                >
-                  En créer un
-                </Link>
-              </p>
-              <p className="text-center text-xs text-muted-foreground">
-                <Link href="/recover-account" className="hover:underline">
-                  Mot de passe oublié ?
-                </Link>
-              </p>
             </form>
+
+            <p className="text-center text-sm text-muted-foreground">
+              Pas de compte ?{" "}
+              <Link
+                href={role === "vendor" ? "/signup?role=vendor" : "/signup"}
+                className="font-medium text-foreground hover:underline"
+              >
+                Créer un compte
+              </Link>
+            </p>
           </div>
         </div>
       </div>
