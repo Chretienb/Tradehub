@@ -226,7 +226,7 @@ export function SignupForm({ categories }: { categories: Category[] }) {
       </div>
 
       {/* Form panel */}
-      <div className="flex flex-col px-4 py-6 sm:px-8 sm:py-8 lg:overflow-y-auto lg:px-12 lg:py-10 xl:px-20">
+      <div className="flex flex-col px-8 py-14 sm:px-8 sm:py-10 lg:overflow-y-auto lg:px-12 xl:px-20">
         {!isVendorOnboarding && (
           <>
             <Link

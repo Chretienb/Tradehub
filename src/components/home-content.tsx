@@ -69,7 +69,7 @@ export function HomeContent({
           style={{ background: "#0b6b3a1f" }}
         />
 
-        <div className="relative mx-auto max-w-6xl px-1 sm:px-6">
+        <div className="relative mx-auto max-w-6xl px-6 sm:px-6">
           <div className="grid gap-4 lg:grid-cols-2">
             {/* Big video card */}
             <div className="relative flex min-h-[560px] flex-col overflow-hidden rounded-3xl lg:min-h-[600px]">
@@ -178,7 +178,7 @@ export function HomeContent({
               </div>
 
               {/* Two small cards */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-5">
                 <Link
                   href="/signup?role=vendor"
                   className="group relative flex flex-col justify-between overflow-hidden rounded-3xl p-7 text-white"
@@ -217,7 +217,7 @@ export function HomeContent({
       </section>
 
       {/* Categories */}
-      <section id="categories" className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-24">
+      <section id="categories" className="mx-auto max-w-6xl px-6 py-14 sm:px-6 sm:py-24">
         <p className={eyebrow}>{t("categories.eyebrow")}</p>
         <div className="mb-6 mt-2 flex flex-col gap-3 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
           <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t("categories.title")}</h2>
@@ -255,7 +255,7 @@ export function HomeContent({
 
       {/* Featured products */}
       <section className="border-y bg-secondary/40">
-        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-6xl px-6 py-14 sm:px-6 sm:py-24">
           <p className={eyebrow}>{t("featured.eyebrow")}</p>
           <div className="mb-6 mt-2 flex flex-col gap-3 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t("featured.title")}</h2>
@@ -274,7 +274,7 @@ export function HomeContent({
 
       {/* Security */}
       <section>
-        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-6xl px-6 py-14 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-xl text-center">
             <p className={cn(eyebrow, "justify-center")}>{t("security.eyebrow")}</p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{t("security.title")}</h2>
@@ -325,7 +325,7 @@ export function HomeContent({
 
       {/* Vendor CTA */}
       <section className="border-t">
-        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-6xl px-6 py-14 sm:px-6 sm:py-24">
           <Card
             className="relative overflow-hidden border-none py-10 text-white sm:py-14"
             style={{ background: "linear-gradient(135deg, #0e7d43, #0b6b3a)" }}
