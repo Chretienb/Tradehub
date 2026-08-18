@@ -25,7 +25,7 @@ export function HeaderAuthActions({ session }: { session: UserSession | null }) 
         <Button render={<Link href="/login" />} variant="ghost" size="sm">
           {t("header.login")}
         </Button>
-        <Button render={<Link href="/signup?role=vendor" />} size="sm">
+        <Button render={<Link href="/signup?role=vendor" />} variant="ghost" size="sm">
           {t("header.becomeVendor")}
         </Button>
       </div>
