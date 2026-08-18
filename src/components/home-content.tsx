@@ -181,7 +181,7 @@ export function HomeContent({
               <div className="grid grid-cols-2 gap-4">
                 <Link
                   href="/signup?role=vendor"
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 text-white"
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-3xl p-7 text-white"
                   style={{ background: "linear-gradient(150deg, #0e7d43, #0b6b3a)" }}
                 >
                   <div className="flex items-start justify-between">
@@ -197,7 +197,7 @@ export function HomeContent({
 
                 <Link
                   href="/confiance-securite"
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 text-[#1e1e1e]"
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-3xl p-7 text-[#1e1e1e]"
                   style={{ background: "linear-gradient(150deg, #e0b84a, #c89b2d)" }}
                 >
                   <div className="flex items-start justify-between">

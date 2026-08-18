@@ -121,7 +121,7 @@ export default async function VendorDashboardPage() {
 
   return (
     <div className="mx-auto max-w-6xl">
-      <div className="relative mb-4 flex min-h-[200px] flex-col justify-end overflow-hidden rounded-2xl p-6 sm:mb-6 sm:min-h-[320px] sm:rounded-3xl">
+      <div className="relative mb-4 flex min-h-[200px] flex-col justify-end overflow-hidden rounded-2xl p-8 sm:mb-6 sm:min-h-[320px] sm:rounded-3xl">
         <video
           autoPlay
           loop
