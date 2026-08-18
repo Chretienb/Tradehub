@@ -13,22 +13,20 @@ import {
   ArrowRight,
   ArrowUpRight,
   BadgeCheck,
-  CreditCard,
   Headset,
   Lock,
   Send,
   ShieldCheck,
-  Phone,
 } from "lucide-react";
 
 const quickSearches = ["Riz en sac", "Ciment", "Huile végétale", "Téléphones", "Tomates"];
 
 const paymentMethods = [
-  { icon: Phone, label: "Orange Money" },
-  { icon: Phone, label: "Airtel Money" },
-  { icon: Phone, label: "M-Pesa" },
-  { icon: CreditCard, label: "Visa" },
-  { icon: CreditCard, label: "Mastercard" },
+  { src: "/brand/payments/orange-money.svg", label: "Orange Money", width: 375, height: 100 },
+  { src: "/brand/payments/airtel.svg", label: "Airtel Money", width: 96, height: 100 },
+  { src: "/brand/payments/mpesa.svg", label: "M-Pesa", width: 188, height: 100 },
+  { src: "/brand/payments/visa.svg", label: "Visa", width: 308, height: 100 },
+  { src: "/brand/payments/mastercard.svg", label: "Mastercard", width: 129, height: 100 },
 ];
 
 const eyebrow = "flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[.14em] text-primary";
@@ -303,18 +301,21 @@ export function HomeContent({
 
           <div className="mt-8 flex flex-col items-center gap-3 sm:mt-12">
             <p className="text-sm font-medium text-muted-foreground">{t("security.paymentMethods")}</p>
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              {paymentMethods.map((method) => {
-                const Icon = method.icon;
-                return (
-                  <span
-                    key={method.label}
-                    className="flex items-center gap-1.5 rounded-full border bg-background px-3 py-1.5 text-sm text-foreground/80"
-                  >
-                    <Icon className="size-3.5" /> {method.label}
-                  </span>
-                );
-              })}
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              {paymentMethods.map((method) => (
+                <span
+                  key={method.label}
+                  className="flex h-9 items-center justify-center rounded-lg border bg-white px-3 sm:h-10"
+                >
+                  <Image
+                    src={method.src}
+                    alt={method.label}
+                    width={method.width}
+                    height={method.height}
+                    className="h-4 w-auto sm:h-5"
+                  />
+                </span>
+              ))}
             </div>
             <Button render={<Link href="/confiance-securite" />} variant="link" size="sm">
               {t("security.howEscrowWorks")} <ArrowRight className="size-3.5" />
