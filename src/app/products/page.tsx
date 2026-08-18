@@ -1,9 +1,11 @@
 import { Suspense } from "react";
+import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ProductCard } from "@/components/product-card";
 import { ProductFilters } from "@/components/product-filters";
 import { getCategories, getCategoryBySlug, getProducts } from "@/lib/data/catalog";
+import { ArrowLeft } from "lucide-react";
 
 export default async function ProductsPage({
   searchParams,
@@ -24,6 +26,14 @@ export default async function ProductsPage({
 
       <main className="flex-1">
         <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+          <Link
+            href="/"
+            className="mb-4 flex w-fit items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="size-4" />
+            Retour à l&apos;accueil
+          </Link>
+
           <div className="mb-6">
             <h1 className="text-2xl font-semibold tracking-tight">
               {activeCategory ? activeCategory.name : "Tous les produits"}

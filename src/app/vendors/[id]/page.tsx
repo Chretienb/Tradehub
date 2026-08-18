@@ -11,6 +11,7 @@ import { VendorQuoteActions } from "@/components/vendor-quote-actions";
 import { readSessionServer } from "@/lib/auth-server";
 import { getProductsByVendor, getVendorById, getVendorIds } from "@/lib/data/catalog";
 import {
+  ArrowLeft,
   BadgeCheck,
   Clock,
   Lock,
@@ -61,7 +62,15 @@ export default async function VendorProfilePage({
           />
         </div>
 
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 pb-10 sm:px-6">
+          <Link
+            href="/vendors"
+            className="mt-4 flex w-fit items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="size-4" />
+            Retour aux fournisseurs
+          </Link>
+
           {/* Store header — the avatar breaks the banner, but the text block
               always starts in normal flow below it, so long names or wrapped
               badges can never bleed up into the photo. */}
@@ -202,12 +211,6 @@ export default async function VendorProfilePage({
                 </CardContent>
               </Card>
             </div>
-          </div>
-
-          <div className="py-10">
-            <Link href="/vendors" className="text-sm text-muted-foreground hover:text-foreground">
-              ← Retour aux fournisseurs
-            </Link>
           </div>
         </div>
       </main>

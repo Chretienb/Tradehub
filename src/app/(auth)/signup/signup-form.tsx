@@ -22,8 +22,10 @@ import { createClient } from "@/lib/supabase/client";
 import {
   AlertTriangle,
   ArrowLeft,
+  ArrowRight,
   BadgeCheck,
   Building2,
+  Clock,
   Headset,
   Lock,
   PartyPopper,
@@ -36,7 +38,7 @@ const trustPoints = [
   { icon: Headset, text: "Support disponible en cas de litige" },
 ];
 
-type VendorStep = "details" | "congrats" | "verification";
+type VendorStep = "details" | "congrats" | "verification" | "submitted";
 
 export function SignupForm({ categories }: { categories: Category[] }) {
   const router = useRouter();
@@ -151,8 +153,7 @@ export function SignupForm({ categories }: { categories: Category[] }) {
       toast.error(error);
       return;
     }
-    toast.success("Dossier envoyé pour vérification.");
-    router.push("/vendor/dashboard");
+    setVendorStep("submitted");
   }
 
   const isVendorOnboarding = role === "vendor" && vendorStep !== "details";
@@ -289,16 +290,34 @@ export function SignupForm({ categories }: { categories: Category[] }) {
               onSubmit={handleSubmitVerification}
               className="mx-auto flex w-full max-w-sm flex-col gap-6"
             >
-              <div className="flex items-center gap-2">
-                <Building2 className="size-5 text-primary" />
-                <h1 className="text-2xl font-semibold tracking-tight">
-                  Vérifiez votre entreprise
-                </h1>
+              <div>
+                <div className="mb-3 flex items-center gap-2">
+                  <span className="font-mono text-[11px] font-medium uppercase tracking-[.14em] text-primary">
+                    Étape 2 sur 2
+                  </span>
+                  <div className="flex flex-1 gap-1">
+                    <span className="h-1 flex-1 rounded-full bg-primary" />
+                    <span className="h-1 flex-1 rounded-full bg-primary" />
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="flex size-10 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/15">
+                    <Building2 className="size-5 text-primary" />
+                  </span>
+                  <div>
+                    <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">
+                      Vérification de l&apos;entreprise
+                    </h1>
+                    <p className="text-xs text-muted-foreground">Processus de conformité (KYB)</p>
+                  </div>
+                </div>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Nous vérifions chaque fournisseur avant d&apos;activer son badge
+                  « Vérifié » — c&apos;est ce qui garantit la confiance des acheteurs
+                  sur TEKA. Ces informations sont transmises uniquement à notre
+                  équipe de conformité.
+                </p>
               </div>
-              <p className="-mt-4 text-sm text-muted-foreground">
-                Le badge « Vérifié » n&apos;apparaît sur votre boutique qu&apos;après
-                contrôle de votre RCCM et de votre adresse par l&apos;équipe TEKA.
-              </p>
 
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
@@ -310,7 +329,8 @@ export function SignupForm({ categories }: { categories: Category[] }) {
                   </Label>
                   <Input
                     id="rccm"
-                    placeholder="Ex : CD/KNG/RCCM/24-B-1234"
+                    placeholder="CD/KNG/RCCM/24-B-1234"
+                    className="font-mono tracking-wide"
                     value={rccm}
                     onChange={(e) => setRccm(e.target.value)}
                   />
@@ -346,8 +366,12 @@ export function SignupForm({ categories }: { categories: Category[] }) {
               </div>
 
               <div className="flex flex-col gap-3">
+                <p className="flex items-center gap-2 rounded-lg bg-secondary/60 px-3 py-2.5 text-xs text-muted-foreground">
+                  <Lock className="size-3.5 flex-shrink-0 text-primary" />
+                  Connexion chiffrée — vos données ne sont jamais partagées avec des tiers.
+                </p>
                 <Button type="submit" className="w-full" size="lg" disabled={submitting}>
-                  {submitting ? "Envoi…" : "Terminer et envoyer pour vérification"}
+                  {submitting ? "Envoi sécurisé…" : "Envoyer pour vérification"}
                 </Button>
                 <button
                   type="button"
@@ -358,6 +382,42 @@ export function SignupForm({ categories }: { categories: Category[] }) {
                 </button>
               </div>
             </form>
+          </div>
+        ) : role === "vendor" && vendorStep === "submitted" ? (
+          <div className="flex flex-1 items-center py-10">
+            <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-6 text-center">
+              <span className="flex size-16 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-950">
+                <Clock className="size-8 text-amber-600 dark:text-amber-400" />
+              </span>
+              <div>
+                <h1 className="text-2xl font-semibold tracking-tight">Dossier envoyé</h1>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Votre demande de vérification a bien été transmise à notre équipe
+                  de conformité. Vous serez notifié dès que votre badge « Vérifié »
+                  sera actif.
+                </p>
+              </div>
+
+              <div className="flex w-full items-center justify-between rounded-xl border p-3.5">
+                <span className="text-sm font-medium">Statut du dossier</span>
+                <span className="flex items-center gap-1.5 rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-700 dark:bg-amber-950 dark:text-amber-300">
+                  <Clock className="size-3.5" /> Vérification en cours
+                </span>
+              </div>
+
+              <p className="flex items-center gap-2 rounded-lg bg-secondary/60 px-3 py-2.5 text-xs text-muted-foreground">
+                <ShieldCheck className="size-3.5 flex-shrink-0 text-primary" />
+                Délai de traitement habituel : 24 à 48 heures ouvrées.
+              </p>
+
+              <Button
+                size="lg"
+                className="w-full"
+                onClick={() => router.push("/vendor/dashboard")}
+              >
+                Aller au tableau de bord <ArrowRight className="size-4" />
+              </Button>
+            </div>
           </div>
         ) : (
           <div className="flex flex-1 items-center py-10">
