@@ -178,7 +178,7 @@ export function HomeContent({
               </div>
 
               {/* Two small cards */}
-              <div className="grid grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
                 <Link
                   href="/signup?role=vendor"
                   className="group relative flex flex-col justify-between overflow-hidden rounded-3xl p-7 text-white"
