@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${poppins.variable} ${inter.variable} ${geistMono.variable} h-full overscroll-none antialiased`}
+      className={`${poppins.variable} ${inter.variable} ${geistMono.variable} h-full overflow-x-hidden overscroll-none antialiased`}
     >
       <body className="flex min-h-full flex-col overflow-x-hidden overscroll-none">
         <LanguageProvider>
