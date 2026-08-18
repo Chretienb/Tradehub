@@ -122,16 +122,17 @@ export default async function VendorDashboardPage() {
   return (
     <div className="mx-auto max-w-6xl">
       <div className="relative mb-4 flex min-h-[200px] flex-col justify-end overflow-hidden rounded-2xl p-8 sm:mb-6 sm:min-h-[320px] sm:rounded-3xl">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          poster="/videos/vendor-market-poster.jpg"
+        {/* Animated WebP instead of <video> — iOS Low Power Mode (and
+            Android battery savers) pause autoplaying <video> elements to
+            save power, which looked like the hero randomly freezing.
+            Browsers treat animated images as always-playing, so this
+            can't be paused by the OS the same way. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/videos/vendor-market.webp"
+          alt=""
           className="absolute inset-0 h-full w-full object-cover"
-        >
-          <source src="/videos/vendor-market.mp4" type="video/mp4" />
-        </video>
+        />
         <div
           className="absolute inset-0"
           style={{
