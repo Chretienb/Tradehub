@@ -12,7 +12,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogoReveal } from "@/components/logo-reveal";
 import type { UserRole } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/client";
-import { BadgeCheck, Headset, Lock } from "lucide-react";
+import { ArrowLeft, BadgeCheck, Headset, Lock } from "lucide-react";
 
 const trustPoints = [
   { icon: BadgeCheck, text: "Fournisseurs vérifiés avant publication" },
@@ -137,7 +137,15 @@ function LoginForm() {
 
       {/* Form panel */}
       <div className="flex flex-col px-4 py-6 sm:px-8 sm:py-8 lg:px-12 lg:py-10 xl:px-20">
-        <div className="flex items-center justify-between lg:justify-end">
+        <Link
+          href="/"
+          className="flex w-fit items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
+        >
+          <ArrowLeft className="size-4" />
+          Retour à l&apos;accueil
+        </Link>
+
+        <div className="mt-4 flex items-center justify-between lg:justify-end">
           <Link href="/" className="flex items-center gap-2 lg:hidden">
             <Image src="/brand/logo-icon.png" alt="TEKA" width={30} height={30} className="object-contain" />
             <span className="font-heading text-lg font-semibold text-foreground">TEKA</span>

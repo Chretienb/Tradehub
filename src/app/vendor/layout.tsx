@@ -7,7 +7,7 @@ export default async function VendorLayout({ children }: { children: React.React
   return (
     <div className="flex min-h-full flex-col sm:flex-row">
       <VendorNav session={session} />
-      <main className="flex-1 bg-secondary/10 p-6 pb-24 sm:p-8">{children}</main>
+      <main className="flex-1 bg-secondary/10 p-6 pb-24 sm:p-6">{children}</main>
     </div>
   );
 }
