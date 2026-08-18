@@ -8,11 +8,11 @@ export function SiteFooter() {
 
   return (
     <footer className="border-t">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-10">
         <p className="text-sm text-muted-foreground">
           © {new Date().getFullYear()} {t("footer.copyright")}
         </p>
-        <div className="flex gap-6 text-sm text-muted-foreground">
+        <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground sm:gap-x-6">
           <Link href="/products" className="hover:text-foreground">
             {t("nav.products")}
           </Link>

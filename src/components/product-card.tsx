@@ -34,7 +34,7 @@ export function ProductCard({ product }: { product: Product }) {
           <p className="truncate text-sm font-medium group-hover:text-primary">{product.name}</p>
         </Link>
 
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <div className="flex items-baseline gap-1">
             <span className="font-heading text-lg font-semibold tracking-tight">
               {product.price.toFixed(2)} $

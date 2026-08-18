@@ -217,11 +217,11 @@ export function HomeContent({
       </section>
 
       {/* Categories */}
-      <section id="categories" className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+      <section id="categories" className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-24">
         <p className={eyebrow}>{t("categories.eyebrow")}</p>
-        <div className="mb-10 mt-2 flex items-end justify-between">
-          <h2 className="text-3xl font-semibold tracking-tight">{t("categories.title")}</h2>
-          <Button render={<Link href="/products" />} variant="ghost" size="sm">
+        <div className="mb-6 mt-2 flex flex-col gap-3 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
+          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t("categories.title")}</h2>
+          <Button render={<Link href="/products" />} variant="ghost" size="sm" className="w-fit">
             {t("categories.viewAll")} <ArrowRight className="size-4" />
           </Button>
         </div>
@@ -255,16 +255,16 @@ export function HomeContent({
 
       {/* Featured products */}
       <section className="border-y bg-secondary/40">
-        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-24">
           <p className={eyebrow}>{t("featured.eyebrow")}</p>
-          <div className="mb-10 mt-2 flex items-end justify-between">
-            <h2 className="text-3xl font-semibold tracking-tight">{t("featured.title")}</h2>
-            <Button render={<Link href="/products" />} variant="ghost" size="sm">
+          <div className="mb-6 mt-2 flex flex-col gap-3 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
+            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t("featured.title")}</h2>
+            <Button render={<Link href="/products" />} variant="ghost" size="sm" className="w-fit">
               {t("featured.viewAll")} <ArrowRight className="size-4" />
             </Button>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -274,14 +274,14 @@ export function HomeContent({
 
       {/* Security */}
       <section>
-        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-xl text-center">
             <p className={cn(eyebrow, "justify-center")}>{t("security.eyebrow")}</p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-tight">{t("security.title")}</h2>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{t("security.title")}</h2>
             <p className="mt-3 text-muted-foreground">{t("security.subtitle")}</p>
           </div>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-3">
+          <div className="mt-8 grid gap-4 sm:mt-12 sm:grid-cols-3 sm:gap-5">
             {securityPillars.map((pillar) => {
               const Icon = pillar.icon;
               return (
@@ -301,7 +301,7 @@ export function HomeContent({
             })}
           </div>
 
-          <div className="mt-12 flex flex-col items-center gap-3">
+          <div className="mt-8 flex flex-col items-center gap-3 sm:mt-12">
             <p className="text-sm font-medium text-muted-foreground">{t("security.paymentMethods")}</p>
             <div className="flex flex-wrap items-center justify-center gap-2">
               {paymentMethods.map((method) => {
@@ -325,9 +325,9 @@ export function HomeContent({
 
       {/* Vendor CTA */}
       <section className="border-t">
-        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-24">
           <Card
-            className="relative overflow-hidden border-none py-14 text-white"
+            className="relative overflow-hidden border-none py-10 text-white sm:py-14"
             style={{ background: "linear-gradient(135deg, #0e7d43, #0b6b3a)" }}
           >
             <div
@@ -337,11 +337,11 @@ export function HomeContent({
                   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
               }}
             />
-            <CardContent className="relative flex flex-col items-center gap-4 text-center">
+            <CardContent className="relative flex flex-col items-center gap-4 px-4 text-center">
               <span className="flex size-14 items-center justify-center rounded-2xl bg-white/15 backdrop-blur">
                 <ShieldCheck className="size-7" />
               </span>
-              <h2 className="text-3xl font-semibold tracking-tight">{t("vendorCta.title")}</h2>
+              <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t("vendorCta.title")}</h2>
               <p className="max-w-md text-white/85">{t("vendorCta.subtitle")}</p>
               <Button render={<Link href="/signup?role=vendor" />} variant="secondary" size="lg" className="h-11 px-6 text-[15px]">
                 {t("vendorCta.button")}
