@@ -147,7 +147,7 @@ function LoginForm() {
       </div>
 
       {/* Form panel */}
-      <div className="flex flex-col px-4 py-6 sm:px-8 sm:py-8 lg:px-12 lg:py-10 xl:px-20">
+      <div className="flex flex-col px-6 py-8 sm:px-8 sm:py-10 lg:px-12 xl:px-20">
         <Link
           href="/"
           className="flex w-fit items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
