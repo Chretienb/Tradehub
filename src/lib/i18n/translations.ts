@@ -86,6 +86,8 @@ const fr = {
   "vendorNav.account": "Compte fournisseur",
   "vendorNav.collapseSidebar": "Réduire la barre latérale",
   "vendorNav.expandSidebar": "Ouvrir la barre latérale",
+
+  "common.close": "Fermer",
 } as const;
 
 export type TranslationKey = keyof typeof fr;
@@ -163,6 +165,8 @@ const en: Record<TranslationKey, string> = {
   "vendorNav.account": "Vendor account",
   "vendorNav.collapseSidebar": "Collapse sidebar",
   "vendorNav.expandSidebar": "Expand sidebar",
+
+  "common.close": "Close",
 };
 
 const ln: Record<TranslationKey, string> = {
@@ -238,6 +242,8 @@ const ln: Record<TranslationKey, string> = {
   "vendorNav.account": "Kɔnti ya moteki",
   "vendorNav.collapseSidebar": "Kanga bar ya pembeni",
   "vendorNav.expandSidebar": "Fungola bar ya pembeni",
+
+  "common.close": "Kanga",
 };
 
 const sw: Record<TranslationKey, string> = {
@@ -313,6 +319,8 @@ const sw: Record<TranslationKey, string> = {
   "vendorNav.account": "Akaunti ya muuzaji",
   "vendorNav.collapseSidebar": "Kunja upau wa pembeni",
   "vendorNav.expandSidebar": "Panua upau wa pembeni",
+
+  "common.close": "Funga",
 };
 
 const kg: Record<TranslationKey, string> = {
@@ -388,6 +396,8 @@ const kg: Record<TranslationKey, string> = {
   "vendorNav.account": "Konti ya ntekisi",
   "vendorNav.collapseSidebar": "Kanga barre ya lubakala",
   "vendorNav.expandSidebar": "Fungula barre ya lubakala",
+
+  "common.close": "Kanga",
 };
 
 export const translations: Record<Locale, Record<TranslationKey, string>> = {

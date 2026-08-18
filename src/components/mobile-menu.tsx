@@ -1,15 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Logo } from "@/components/logo";
 import type { UserSession } from "@/lib/auth";
 import { useLanguage } from "@/lib/i18n/context";
 import { createClient } from "@/lib/supabase/client";
@@ -25,6 +21,7 @@ import {
   Package,
   ShieldCheck,
   Store,
+  X,
 } from "lucide-react";
 
 const navItems: { href: string; key: TranslationKey; icon: typeof LayoutGrid }[] = [
@@ -35,13 +32,19 @@ const navItems: { href: string; key: TranslationKey; icon: typeof LayoutGrid }[]
 ];
 
 const itemClass =
-  "gap-3 rounded-xl px-3 py-2.5 text-[15px] font-medium text-foreground/80 focus:text-foreground [&_svg]:text-muted-foreground";
+  "flex items-center gap-3.5 rounded-xl px-3.5 py-3.5 text-base font-medium text-foreground/85 transition-colors hover:bg-secondary hover:text-foreground active:bg-secondary [&_svg]:text-muted-foreground";
 
 export function MobileMenu({ session }: { session: UserSession | null }) {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const { t } = useLanguage();
 
+  function close() {
+    setOpen(false);
+  }
+
   async function handleSignOut() {
+    close();
     const supabase = createClient();
     await supabase.auth.signOut();
     router.push("/");
@@ -50,83 +53,100 @@ export function MobileMenu({ session }: { session: UserSession | null }) {
 
   return (
     <div className="md:hidden">
-      <DropdownMenu>
-        <DropdownMenuTrigger
+      <DialogPrimitive.Root open={open} onOpenChange={setOpen}>
+        <DialogPrimitive.Trigger
           className="flex size-9 flex-shrink-0 items-center justify-center rounded-full text-foreground transition-colors hover:bg-secondary"
           aria-label={t("vendorNav.menu")}
         >
           <Menu className="size-5" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" sideOffset={10} className="w-72 rounded-2xl p-2 shadow-lg">
-          {session && (
-            <>
-              <div className="flex items-center gap-3 rounded-xl bg-secondary/60 p-2.5">
-                <Avatar size="lg" className="bg-primary/10">
-                  <AvatarFallback className="bg-primary/10 font-medium text-primary">
-                    {getInitials(session.name)}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium">{session.name}</p>
-                  <p className="truncate text-xs text-muted-foreground">
-                    {session.email ?? t("vendorNav.account")}
-                  </p>
+        </DialogPrimitive.Trigger>
+
+        <DialogPrimitive.Portal>
+          <DialogPrimitive.Popup className="fixed inset-0 z-50 flex h-dvh w-screen flex-col overflow-y-auto bg-background outline-none data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0">
+            <div className="flex flex-shrink-0 items-center justify-between border-b px-4 py-3">
+              <Logo iconSize={32} />
+              <DialogPrimitive.Close
+                className="flex size-9 flex-shrink-0 items-center justify-center rounded-full text-foreground transition-colors hover:bg-secondary"
+                aria-label={t("common.close")}
+              >
+                <X className="size-5" />
+              </DialogPrimitive.Close>
+            </div>
+
+            <div className="flex-1 px-4 py-5">
+              {session && (
+                <div className="mb-5 flex items-center gap-3 rounded-xl bg-secondary/60 p-3">
+                  <Avatar size="lg">
+                    <AvatarFallback className="bg-primary/10 font-medium text-primary">
+                      {getInitials(session.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-medium">{session.name}</p>
+                    <p className="truncate text-sm text-muted-foreground">
+                      {session.email ?? t("vendorNav.account")}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <DropdownMenuSeparator className="my-2" />
-            </>
-          )}
-
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <DropdownMenuItem key={item.href} render={<Link href={item.href} />} className={itemClass}>
-                <Icon className="size-[18px]" />
-                {t(item.key)}
-              </DropdownMenuItem>
-            );
-          })}
-
-          <DropdownMenuSeparator className="my-2" />
-
-          {session ? (
-            <>
-              {session.role === "vendor" && (
-                <DropdownMenuItem render={<Link href="/vendor/dashboard" />} className={itemClass}>
-                  <LayoutDashboard className="size-[18px]" /> {t("header.dashboard")}
-                </DropdownMenuItem>
               )}
-              {session.role === "customer" && (
-                <DropdownMenuItem render={<Link href="/account" />} className={itemClass}>
-                  <Inbox className="size-[18px]" /> {t("header.myAccount")}
-                </DropdownMenuItem>
-              )}
-              <DropdownMenuItem
-                onClick={handleSignOut}
-                variant="destructive"
-                className="gap-3 rounded-xl px-3 py-2.5 text-[15px] font-medium"
-              >
-                <LogOut className="size-[18px]" /> {t("header.signOut")}
-              </DropdownMenuItem>
-            </>
-          ) : (
-            <>
-              <DropdownMenuItem render={<Link href="/login" />} className={itemClass}>
-                <LogIn className="size-[18px]" /> {t("header.login")}
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                render={<Link href="/signup?role=vendor" />}
-                className={cn(
-                  itemClass,
-                  "mt-1 bg-primary text-primary-foreground [&_svg]:text-primary-foreground focus:bg-primary/90 focus:text-primary-foreground"
+
+              <nav className="flex flex-col gap-1">
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link key={item.href} href={item.href} onClick={close} className={itemClass}>
+                      <Icon className="size-5" />
+                      {t(item.key)}
+                    </Link>
+                  );
+                })}
+              </nav>
+
+              <div className="my-5 h-px bg-border" />
+
+              <nav className="flex flex-col gap-1">
+                {session ? (
+                  <>
+                    {session.role === "vendor" && (
+                      <Link href="/vendor/dashboard" onClick={close} className={itemClass}>
+                        <LayoutDashboard className="size-5" /> {t("header.dashboard")}
+                      </Link>
+                    )}
+                    {session.role === "customer" && (
+                      <Link href="/account" onClick={close} className={itemClass}>
+                        <Inbox className="size-5" /> {t("header.myAccount")}
+                      </Link>
+                    )}
+                    <button
+                      type="button"
+                      onClick={handleSignOut}
+                      className={cn(itemClass, "text-destructive [&_svg]:text-destructive")}
+                    >
+                      <LogOut className="size-5" /> {t("header.signOut")}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/login" onClick={close} className={itemClass}>
+                      <LogIn className="size-5" /> {t("header.login")}
+                    </Link>
+                    <Link
+                      href="/signup?role=vendor"
+                      onClick={close}
+                      className={cn(
+                        itemClass,
+                        "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 [&_svg]:text-primary-foreground"
+                      )}
+                    >
+                      <Store className="size-5" /> {t("header.becomeVendor")}
+                    </Link>
+                  </>
                 )}
-              >
-                <Store className="size-[18px]" /> {t("header.becomeVendor")}
-              </DropdownMenuItem>
-            </>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
+              </nav>
+            </div>
+          </DialogPrimitive.Popup>
+        </DialogPrimitive.Portal>
+      </DialogPrimitive.Root>
     </div>
   );
 }
